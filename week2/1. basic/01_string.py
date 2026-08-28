@@ -38,12 +38,17 @@ def is_palindrome(s):
     answer = ""
 
     for a in lower_string:
-        if a.isalnum(): answer += a
+        if a.isalnum(): answer += a # 이거 대신 join()을 하는 방식을 선호. 왜냐면 +=는 시간복잡도가 O(n^2)
 
     if answer == answer[::-1]:
         return True
     
     return False
+
+# 시간복잡도 O(n)
+def example(s):
+    cleaned = ''.join(c.lower() for c in s if c.isalnum())
+    return cleaned == cleaned[::-1]
 
 # 테스트 케이스
 if __name__ == "__main__":
