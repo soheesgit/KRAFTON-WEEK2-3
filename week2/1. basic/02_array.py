@@ -14,11 +14,11 @@
 예제:
 입력:
 [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
+    [1, 2, 3], 00(02) 01(12) 02(22) n=3이다. 3-
+    [4, 5, 6], 10(01) 11(11) 12(21)
+    [7, 8, 9]  20(00) 21(01) 22(20)
 ]
-
+맨 뒷줄부터 순회하면서 append하기? 
 출력:
 [
     [7, 4, 1],
@@ -32,25 +32,14 @@
 """
 
 def rotate_matrix_90(matrix):
-    """
-    2차원 배열을 시계방향으로 90도 회전
-    
-    Args:
-        matrix: N x N 2차원 리스트
-    
-    Returns:
-        회전된 2차원 리스트
-    """
     n = len(matrix)
-    
-    # TODO: n x n 크기의 새로운 배열을 생성하세요 (0으로 초기화)
-    pass
-        
-    # TODO: 원본 배열의 각 요소를 회전된 위치에 배치하세요
-    # 힌트: (i, j) 위치의 요소는 회전 후 (j, n-1-i) 위치로 이동
-    pass
-    
-    return rotated
+    arr = [[0 for i in range(n)] for i in range(n)]
+
+    for i in range(n):
+        for j in range(n):
+            arr[j][n-1-i] = matrix[i][j]
+
+    return arr
 
 def print_matrix(matrix):
     """배열을 보기 좋게 출력하는 헬퍼 함수"""
