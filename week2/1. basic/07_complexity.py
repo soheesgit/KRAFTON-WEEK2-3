@@ -30,12 +30,34 @@ def find_duplicates_brute_force(nums):
     """
     duplicates = []
     n = len(nums)
+
+    for i in range(n):
+        for j in range(i+1, n):
+            if nums[i] == nums[j] and nums[j] not in duplicates: # in 연산은 최악 O(k).
+                    duplicates.append(nums[i])
     
-    # TODO: 이중 반복문으로 중복 찾기
-    ## i번째 원소와 i+1 이후의 모든 원소를 비교
-    ## 같은 원소를 찾으면 duplicates에 추가 (중복 추가 방지 필요)
-    pass
-    
+    return duplicates
+
+def find_duplicates_brute_force_example(nums):
+    duplicates = []
+    n = len(nums)
+
+    for i in range(n): 
+        already_seen = False # 앞 쪽에 같은 값이 있다면 체크
+
+        for j in range(i): #O(n²)
+            if nums[i] == nums[j]:
+                already_seen = True
+                break
+
+        if already_seen:
+            continue
+
+        for j in range(i + 1, n):
+            if nums[i] == nums[j]:
+                duplicates.append(nums[i])
+                break
+
     return duplicates
 
 def find_duplicates_sorting(nums):
@@ -47,14 +69,15 @@ def find_duplicates_sorting(nums):
     if not nums:
         return []
     
-    # TODO: 배열을 정렬하세요 (nums.sort() 사용)
-    pass
+    nums.sort()
     
     duplicates = []
     
-    # TODO: 인접한 원소를 비교하여 중복 찾기
-    # i와 i+1 원소가 같고, duplicates에 없으면 추가
-    pass
+    for i in range(len(nums)-1):
+        # if nums[i] == nums[i+1] and nums[i] not in duplicates: # 이 코드도 not in 이 O(n)이라 O(n²) 가능
+        if nums[i] == nums[i+1]:
+            if not duplicates or duplicates[-1] != nums[i]: # 배열이 정렬되어있으니 마지막 값만 확인하면 됨
+                duplicates.append(nums[i])
     
     return duplicates
 
@@ -66,13 +89,13 @@ def find_duplicates_hash(nums):
     """
     seen = set()
     duplicates = set()
-    
-    # TODO: 각 원소를 순회하면서
-    ## 이미 seen에 있으면 duplicates에 추가
-    ## 없으면 seen에 추가
-    pass
-    
-    return list(duplicates)
+
+    for num in nums:
+        if num in seen:
+            duplicates.add(num)
+        else:
+            seen.add(num)
+    return list(duplicates)    
 
 def measure_time(func, nums, method_name):
     """실행 시간 측정 헬퍼 함수"""
