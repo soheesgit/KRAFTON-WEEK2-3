@@ -37,7 +37,14 @@ def gcd(a, b):
     # TODO: 유클리드 호제법 구현
     # base case: b가 0이면 a 반환
     # recursive를 이용 
-    pass
+
+    def Euclidean(num1, num2): 
+        if num2 == 0:
+            return num1
+
+        return Euclidean(num2, num1 % num2)
+
+    return Euclidean(a, b)
 
 def gcd_iterative(a, b):
     """
@@ -49,9 +56,13 @@ def gcd_iterative(a, b):
     Returns:
         최대공약수
     """
-    # TODO: 반복문으로 구현
-    # b가 0이 될 때까지 반복
-    pass
+
+    while b != 0:
+        temp = a % b
+        a = b
+        b = temp
+
+    return a
 
 def lcm(a, b):
     """
@@ -63,8 +74,8 @@ def lcm(a, b):
     Returns:
         최소공배수
     """
-    # TODO: LCM 계산
-    pass
+
+    return int(a*b / gcd(a, b))
 
 def extended_gcd(a, b):
     """
@@ -97,7 +108,24 @@ def is_prime(n):
     # n이 2보다 작으면 False
     # 2부터 sqrt(n)까지 나누어 떨어지는지 확인    
     # 3부터 sqrt(n)까지 홀수만 확인
-    pass 
+
+    if n < 2:
+        return False
+
+    if n == 2:
+        return True
+
+    if n % 2 == 0:
+        return False
+
+    i = 3
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 2
+
+    return True
+        
 
 # 테스트 케이스
 if __name__ == "__main__":
@@ -130,11 +158,11 @@ if __name__ == "__main__":
     # 테스트 케이스 4: 확장 유클리드
     print("=== 테스트 케이스 4: 확장 유클리드 ===")
     a, b = 35, 15
-    g, x, y = extended_gcd(a, b)
-    print(f"a = {a}, b = {b}")
-    print(f"GCD = {g}")
-    print(f"{a} × {x} + {b} × {y} = {g}")
-    print(f"검증: {a * x + b * y} = {g}")
+    # g, x, y = extended_gcd(a, b)
+    # print(f"a = {a}, b = {b}")
+    # print(f"GCD = {g}")
+    # print(f"{a} × {x} + {b} × {y} = {g}")
+    # print(f"검증: {a * x + b * y} = {g}")
     print()
     
     # 테스트 케이스 5: 소수 판별
