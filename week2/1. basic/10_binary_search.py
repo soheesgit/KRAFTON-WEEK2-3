@@ -39,13 +39,14 @@ def binary_search(arr, target):
     while left <= right:
         mid = (left + right) // 2
 
-        if arr[mid] < target: # 중앙값이 타겟값보다 큼
+        if arr[mid] < target: # 중앙값이 타겟값보다 작음
             left = mid + 1
         elif arr[mid] > target:
             right = mid - 1
         elif arr[mid] == target:
             return mid
 
+    return -1
 
 # 테스트 케이스
 if __name__ == "__main__":
