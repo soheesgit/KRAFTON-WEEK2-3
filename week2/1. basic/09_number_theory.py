@@ -88,11 +88,15 @@ def extended_gcd(a, b):
     Returns:
         (gcd, x, y) 튜플
     """
-    # TODO: 확장 유클리드 호제법 구현
-    # base case: b가 0이면 (a, 1, 0) 반환    
-    # recursive case
-    # 역추적하며 x, y 계산
-    pass
+    if b == 0:
+        return a, 1, 0
+    gcd, x1, y1 = extended_gcd(b, a % b)
+
+    # 역추적
+    x = y1
+    y = x1 - (a // b) * y1
+        
+    return gcd, x, y
 
 def is_prime(n):
     """
@@ -158,11 +162,11 @@ if __name__ == "__main__":
     # 테스트 케이스 4: 확장 유클리드
     print("=== 테스트 케이스 4: 확장 유클리드 ===")
     a, b = 35, 15
-    # g, x, y = extended_gcd(a, b)
-    # print(f"a = {a}, b = {b}")
-    # print(f"GCD = {g}")
-    # print(f"{a} × {x} + {b} × {y} = {g}")
-    # print(f"검증: {a * x + b * y} = {g}")
+    g, x, y = extended_gcd(a, b)
+    print(f"a = {a}, b = {b}")
+    print(f"GCD = {g}")
+    print(f"{a} × {x} + {b} × {y} = {g}")
+    print(f"검증: {a * x + b * y} = {g}")
     print()
     
     # 테스트 케이스 5: 소수 판별
