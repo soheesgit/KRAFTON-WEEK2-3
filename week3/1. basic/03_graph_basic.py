@@ -40,14 +40,19 @@ def create_graph(vertices, edges, directed=False):
     Returns:
         그래프 딕셔너리
     """
-    # TODO: 빈 그래프 초기화
-    pass
-    
-    # TODO: 간선 추가
-    ## 간선 추가 (u에서 v로)
-    ## 무방향 그래프면 반대 방향도 추가
-    pass
-    
+
+    graph = {}
+    # 딕셔너리 안에 간선들 채워놓기
+    for i in range(vertices):
+        graph[i] = []
+
+    for start, end in edges:
+        # 간선 연결 (출발 -> 도착)
+        graph[start].append(end)
+
+        # 무방향 그래프인 경우 도착 -> 출발 또한 연결
+        if not directed:
+            graph[end].append(start)
     return graph
 
 # 테스트 케이스
