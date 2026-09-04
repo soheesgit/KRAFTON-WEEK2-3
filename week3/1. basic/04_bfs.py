@@ -32,7 +32,8 @@ BFS: [0, 1, 2, 3]
 
 from collections import deque
 
-def bfs(graph, start):
+def bad_bfs(graph, start):
+    # deque를 사용하지 않음
     """
     너비 우선 탐색
     
@@ -44,17 +45,33 @@ def bfs(graph, start):
         방문 순서 리스트
     """
     visited = []
-    
-    # TODO: 큐 생성 및 시작 정점 추가
-    ## 방문한 정점 집합
-    pass
+    temp = []
 
-    # TODO: 큐가 빌 때까지 반복
-    ## 큐에서 정점 꺼내기
-    ## 인접한 정점들 확인
-    ## 방문하지 않은 정점이면 큐에 추가
-    pass
-    
+    temp.append(start)
+
+    while len(temp) != 0:
+        step = temp[0]
+        for i in graph[step]:
+            if i not in visited and i not in temp: # in 방식은 시간 복잡도가 O(N)이기 때문에, 비효율적이다.
+                temp.append(i)
+        visited.append(temp.pop(0)) # pop(0): Python 리스트에서 첫 번째 원소를 제거한 뒤 나머지 원소들을 앞으로 이동시켜야 하기 때문에 O(N)의 복잡도
+        
+    return visited
+
+def bfs(graph, start):
+    visited = []
+    queue = deque([start])
+    check = { start } # 방문 여부를 체크하기 위한 set. in 연산을 할때 더 효율적인 시간 복잡도를 가짐
+
+    while queue: 
+        current = queue.popleft() #popleft를 사용해 제일 왼쪽의 원소를 꺼내줌
+        visited.append(current)
+
+        for i in graph[current]:
+            if i not in check:
+                queue.append(i)
+                check.add(i)
+
     return visited
 
 # 테스트 케이스
