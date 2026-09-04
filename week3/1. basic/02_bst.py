@@ -31,6 +31,11 @@
 - target < root.value → 왼쪽으로 이동
 - target > root.value → 오른쪽으로 이동
 - target == root.value → 찾음!
+
+시간 복잡도 O(N)
+공간 복잡도 : O(N)
+트리가 균형 잡혀 있을 때의 재귀 스택: O(log N)
+한쪽으로 쭉 치우친 트리(최악)의 재귀 스택: O(N)
 """
 
 class TreeNode:
@@ -50,13 +55,19 @@ def search_bst(root, target):
     Returns:
         True/False
     """
-    # TODO: root가 None이면 False 반환
-    pass
-    
-    # TODO: 값을 찾으면 True 반환
-    ## target이 작으면 왼쪽 서브트리에서 검색
-    ## target이 크면 오른쪽 서브트리에서 검색
-    pass
+    # 내부 함수 없이 search_bst를 통해 직접 재귀하는 방식도 가능
+    def bst(node):
+        if node is None:
+            return False
+
+        if node.value == target:
+            return True
+        elif node.value < target:
+            return bst(node.right)
+        else:
+            return bst(node.left)
+
+    return bst(root)
 
 # 테스트 케이스
 if __name__ == "__main__":
