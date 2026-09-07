@@ -32,21 +32,18 @@ def select_meetings(meetings):
     Returns:
         (배정된 회의 개수, 선택된 회의 리스트)
     """
-    # TODO: 회의가 없으면 0 반환
-    pass
-    
-    # TODO: 종료 시간 기준으로 정렬
-    pass
-    
+    if len(meetings) == 0:
+        return 0, []
+
+    meetings.sort(key=lambda x: x[1]) # 종료 시간이 빠른 순으로 정렬
+
+    timer = 0
     selected = []
-    
-    # TODO: 첫 번째 회의 선택
-    pass
-    
-    # TODO: 나머지 회의들 확인
-    ## 이전 회의가 끝난 후 시작하는 회의만 선택
-    pass
-    
+
+    for start, end in meetings:
+        if start < timer: continue # 이전에 끝난 시간(end)이, 이번 시작 시간(start)보다 빠를 경우 continue (회의 시간이 겹침)
+        selected.append((start, end))
+        timer = end # 회의 끝난 시간 갱신
     return len(selected), selected
 
 # 테스트 케이스
