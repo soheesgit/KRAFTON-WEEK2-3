@@ -27,7 +27,7 @@
         |  \    /   |1
         |   v  /    v
         |    2 ---> 3 ---> 4
-        |    5      3
+                5      3
 
     start = 0 일 때 최단 거리:
         0 -> 0 : 0
@@ -75,12 +75,34 @@ def dijkstra(n: int, edges: list, start: int) -> list:
     start: 출발 정점
     반환: 길이 n 의 거리 리스트 (도달 불가 = float('inf'))
     """
-    # TODO: 인접 리스트 graph 구성 (graph[u] = [(v, w), ...])
-    # TODO: dist 를 INF 로 초기화하고 dist[start] = 0
-    # TODO: 우선순위 큐(heapq)로 BFS-like 최단경로 탐색
-    # TODO: dist 반환
-    pass
+    graph = {}
+    dist = [INF] * (n) # 출력할 길이를 담음
+    queue = [] # heapq
+    
+    for i in range(n):
+        graph[i] = []
+    dist[start] = 0
 
+    for first, end, weight in edges:
+        graph[first].append((end, weight)) #node, weight 순으로 데이터를 넣음
+
+    queue = []
+    # heap에는 dist, node 순으로 데이터 저장
+    heapq.heappush(queue,(0, start)) # 0에서 0으로 가는 것    
+    while queue:
+        weight, node = heapq.heappop(queue)
+
+        if dist[node] < weight: # 현재 저장되어있는 길이보다 더 오래걸린다면 탐색하지 않음
+            continue
+        
+        for next_node, next_weight in graph[node]:
+            new_dist = dist[node] + next_weight
+
+            if new_dist < dist[next_node]:
+                dist[next_node] = new_dist
+                heapq.heappush(queue, (new_dist, next_node))
+
+    return dist
 
 def _format(dist):
     """출력 표기를 위한 헬퍼: float('inf') 는 'INF' 로 보여줌"""
