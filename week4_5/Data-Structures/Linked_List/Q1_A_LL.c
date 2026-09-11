@@ -90,7 +90,61 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	/* add your code here */
+	ListNode *cur;
+	cur = ll->head;
+
+	int idx = 0;
+
+	// cur이 NULL이면 끝에 도달한 것이며, 주어진 아이템보다 현재 보고 있는 아이템이 더 작다면 삽입 위치이다. 
+	while (cur != NULL && cur->item < item) {
+		cur = cur->next;
+		idx++;
+	}
+
+	// 중복된 값이라면 -1을 리턴 (NULL 접근 오류 방지)
+	if (cur != NULL && cur->item == item) 
+		return -1;
+
+	insertNode(ll, idx, item);
+
+	return idx;
+}
+
+int selfInsertSortedLL(LinkedList *ll, int item)
+{
+	ListNode *cur, *newNode, *prev;
+
+	cur = ll->head;
+	prev = NULL;
+
+	int idx = 0; // cur의 인덱스 위치
+
+	// cur이 NULL이면 끝에 도달한 것이며, 주어진 아이템보다 현재 보고 있는 아이템이 더 작다면 삽입 위치이다. 
+	while (cur != NULL && cur->item < item) {
+		prev = cur; // 이전의 노드 기록
+		cur = cur->next; // 노드 전진
+		idx++;
+	}
+
+	// 중복된 값이라면 -1을 리턴 (NULL 접근 오류 방지)
+	if (cur != NULL && cur->item == item) 
+		return -1;
+
+	// 노드의 자리 만들어놓기
+	newNode = malloc(sizeof(ListNode));
+	// 노드에 item과 다음 노드값 연결하기
+	newNode->item = item;
+	newNode->next = cur;
+	
+	if (prev == NULL) { //맨 앞에 노드를 삽입할 경우
+		ll->head = newNode;
+	} else {
+		prev->next = newNode;
+	}
+	
+	ll->size++;
+
+	return idx;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
